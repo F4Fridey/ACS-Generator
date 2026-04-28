@@ -2,6 +2,8 @@
 <head>
     <title>ACS Generator by F4Fridey</title>
     <link rel="icon" type="image/x-png" href="images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
 
@@ -130,8 +132,9 @@
                         <div id="inputPrimaryObjectClassCustomCont" class="disabled">
                             <p><i>Color</i></p>
                             <input type="color" value="#59a06d" id="inputPrimaryObjectClassColor">
-                            <p><i>Images only (jpg, svg, or png)</i></p>
-                            <input type="file" onchange="updateCustomImages(true)" accept="image/png, image/jpeg, image/svg" id="inputPrimaryObjectClassImage">
+                            <p><i>Images only (jpg, svg, or png)</i> <button class="pasteDelete" onclick="clearInputs('pasteZoneObjectImg','inputPrimaryObjectClassImage')"><i class="fas fa-trash"></i></button></p>
+                            <input type="file" onchange="updateCustomImages(true)" accept="image/png, image/jpeg, image/svg" id="inputPrimaryObjectClassImage"><br>
+                            <div class="pasteWrapper"><div class="paste" ><div class="pastePlaceholder">Paste</div><div id="pasteZoneObjectImg" class="pasteZone" contenteditable="true"></div></div></div>
                         </div>
 
                         <h4>Secondary <a href="https://scp-wiki.wikidot.com/anomaly-classification-system-guide#secondary-class" title="Secondary Classes" target="_blank" class="textdeconone"><i class="fa fa-question-circle-o"></i></a></h4>
@@ -214,7 +217,7 @@
                         <h3>Extra Options</h3>
                         <p><input type="checkbox" id="gridCheckbox" value="grid" checked="true"><label for="gridCheckbox">Grid Style</label><br><i class="comment">Disable to get a smaller<br>width</i></p>
                         <p><label>Width of bar (pixels):</label><br><input type="number" id="acsBarWidthInput" name="width" min="0" max="5000" value=""><button id="acsBarWidthSubmit" onclick="setWidth(-1)">Set</button></p>
-                        <p><input type="checkbox" id="invertCheckbox" value="invert" checked="true"><label for="invertCheckbox">Invert Obj Image</label><br><i class="comment">Visible when you have a<br>2nd Obj Class</i></p>
+                        <p><input type="checkbox" id="invertCheckbox" value="invert"><label for="invertCheckbox">Invert Obj Image</label><br><i class="comment">Visible when you have a<br>2nd Obj Class</i></p>
                         <p>
                             <label class="switch">
                                 <input id="themeToggle" type="checkbox" onclick="toggleTheme()">
@@ -266,9 +269,9 @@
                     <div id="acsObjDisRisk" class="grid borderright">
                         <div id="acsObject" class="">
                             <div id="acsObjectTextCont" class="flex fleft">
-                                <p id="acsObjectPrimaryText"><span id="acsObjectPrimaryTextSubtitle" class="">CONAINMENT CLASS:</span>
+                                <p id="acsObjectPrimaryText" class="em1"><span id="acsObjectPrimaryTextSubtitle" class="">CONAINMENT CLASS:</span>
                                     <br><span id="acsObjectPrimaryTextTitle" class="fw600 em2">SAFE</span></p>
-                                <p id="acsObjectSecondaryText" class="disabled"><span  id="acsObjectSecondaryTextSubtitle" >SECONDARY CLASS:</span>
+                                <p id="acsObjectSecondaryText" class="disabled em1"><span  id="acsObjectSecondaryTextSubtitle" >SECONDARY CLASS:</span>
                                     <br><span id="acsObjectSecondaryTextTitle" class="fw600">NONE</span></p>
                             </div>
                             <div id="acsObjectImageCont" class="acsImageCont">
@@ -291,13 +294,13 @@
                                     <p id="acsDisText"><span class="em075" id="acsDisruptionTextTitleTitle">DISRUPTION CLASS:</span><br><span id="acsDisrupionTextTitle" class="fw600">DARK</span></p>
                                 </div>
                                 <div id="acsDisImageCont" class="acsImageCont">
-                                    <div id="acsDisImageBGWrapper" class="acsImageBGWrapper bgblack">
+                                    <div id="acsDisImageBGWrapper" class="acsImageBGWrapper ringblack">
                                         <div id="acsDisImageWrapper" class="acsImageWrapper fullcircle acsDisRiskImageWrapper">
                                             <img id="acsDisImg" class="acsImg circleMask" src="images/containment-classes/safe-icon.svg">
                                         </div>
                                         
                                         <div id="acsSecondaryDisImageWrapper" class="acsSecondImgWrapper leftBorderRadius">
-                                            <div id="acsSecondaryDisImageBG" class="bgblack acsSecondImgBG">
+                                            <div id="acsSecondaryDisImageBG" class="ringblack acsSecondImgBG">
                                                 <p id="acsDisPText" class="acsSecondImgText fw600">1</p>
                                             </div>
                                         </div>
@@ -309,13 +312,13 @@
                                     <p id="acsRiskText" style="display: inline;"><span class="em075" id="acsRiskTextTitleTitle">RISK CLASS:</span><br><span id="acsRiskTextTitle" class="fw600">NOTICE</span></p>
                                 </div>
                                 <div id="acsRiskImageCont" class="acsImageCont">
-                                    <div id="acsRiskImageBGWrapper" class="acsImageBGWrapper bgblack">
+                                    <div id="acsRiskImageBGWrapper" class="acsImageBGWrapper ringblack">
                                         <div id="acsRiskImageWrapper" class="acsImageWrapper fullcircle acsDisRiskImageWrapper">
                                             <img id="acsRiskImg" class="acsImg circleMask" src="images/containment-classes/safe-icon.svg">
                                         </div>
                                         
                                         <div id="acsSecondaryRiskImageWrapper" class="acsSecondImgWrapper leftBorderRadius">
-                                            <div id="acsSecondaryRiskImageBG" class="bgblack acsSecondImgBG">
+                                            <div id="acsSecondaryRiskImageBG" class="ringblack acsSecondImgBG">
                                                 <p id="acsRiskPText" class="fw600 acsSecondImgText ">1</p>
                                             </div>
                                         </div>
@@ -389,8 +392,14 @@
         </div>
         
         <div class="sectionDiv" id="changelogSectionDiv">
-            <h2>Changelog</h2>
+            <h2 id="changelog">Changelog</h2>
             <div class="y-scroll" id="changelogSectionContent">
+                <h4>0.3.0 - /0/2025</h4>
+                <ul class="changelogList">
+                    <li>added </li>
+                    <li>fixed bg colors for non-esoteric primary classes with a secondary class.</li>
+                    <li>fixed small text when grid style is off and disruption & risk classes are disabled.</li>
+                </ul>
                 <h4>0.2.0 - 27/03/2025</h4>
                 <ul class="changelogList">
                     <li>added dark mode.</li>
