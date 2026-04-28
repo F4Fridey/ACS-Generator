@@ -11,7 +11,7 @@ for (let i = 0; i < firstTimes.length; i++){
     document.getElementById(firstTimes[i]).classList.add("hidden");
 }
 
-// ??? No idea why i added this. No idea what it does. Im the best programer, hands down.
+// Previous obj, disrup, risk class selections
 previous_selections = [0,0,0,0]
 
 function updateInput(){
@@ -60,6 +60,7 @@ function checkOnlyMainClass(){
             document.getElementById("acsDisRisk").classList.add("disabled");
             document.getElementById("acsObjDisRisk").style.setProperty("grid-template-columns", "auto")
         }
+        updateTextScale()
     }
     else{
         onlyShowObjectClass = false;
@@ -68,6 +69,7 @@ function checkOnlyMainClass(){
             document.getElementById("acsDisRisk").classList.remove("disabled");
             document.getElementById("acsObjDisRisk").style.setProperty("grid-template-columns", "auto auto")
         }
+        updateTextScale()
     }
 }
 
@@ -184,7 +186,6 @@ function updateOnjectClass(){
         // ???
         if (previous_selections[0] != obj_class_val){
             document.getElementById("inputPrimaryObjectClassSubtitle").value = objClass.class[obj_class_val].toUpperCase();
-            previous_selections[0] = obj_class_val;
         }
 
         obj_class_subtitle_txt = document.getElementById("inputPrimaryObjectClassSubtitle").value;
@@ -211,7 +212,7 @@ function updateOnjectClass(){
     }
     // custom obj class w/ preset 2nd obj class.
     else if (document.getElementById("acsObjectImg").src != image_path && obj_class_val == -1 && sec_obj_class_val != -1){
-        console.log(image_path.toString())
+        //console.log(image_path.toString())
         changeObjectImage(document.getElementById("inputPrimaryObjectClassImage"), 'acsSmallObjectImg', 'acsSecondaryObjectImg', '');
         if (sec_obj_class_val == 0)
             changeObjectImage(document.getElementById("inputPrimaryObjectClassImage"), 'acsObjectImg', '', '');
@@ -229,8 +230,24 @@ function updateOnjectClass(){
     }
 
     // set object class image background colors.
-    if (document.getElementById("acsObjectImageWrapper").style.getPropertyValue("background-color") != img_bg_color)
+    if (document.getElementById("acsObjectImageWrapper").style.getPropertyValue("background-color") != img_bg_color && sec_obj_class_val == 0){
         document.getElementById("acsObjectImageWrapper").style.setProperty("background-color", img_bg_color);
+        if (previous_selections[0] != 4 && obj_class_val == 4)
+            document.getElementById("invertCheckbox").checked = "true";
+    }
+    else if (document.getElementById("acsSecondaryObjectImageWrapper").style.getPropertyValue("background-color") != "var(--bgblack)" && obj_class_val == 4 && sec_obj_class_val != 0){
+        if (previous_selections[0] != 4)
+            document.getElementById("invertCheckbox").checked = "true";
+        document.getElementById("acsSecondaryObjectImageWrapper").style.setProperty("background-color", "var(--bgblack)");
+        document.getElementById("acsObjectImageWrapper").style.setProperty("background-color", "var(--white)");
+    }
+    else if (document.getElementById("acsSecondaryObjectImageWrapper").style.getPropertyValue("background-color") != img_bg_color && sec_obj_class_val != 0 && obj_class_val != 4){
+        document.getElementById("acsSecondaryObjectImageWrapper").style.setProperty("background-color", img_bg_color);
+        document.getElementById("acsObjectImageWrapper").style.setProperty("background-color", "var(--white)");
+    }
+    if (previous_selections[0] == 4 && obj_class_val != 4 && obj_class_val != -1){
+        document.getElementById("invertCheckbox").checked = false;
+    }
     
     // disable secondary obj class elements.
     if (sec_obj_class_val == 0){
@@ -344,6 +361,9 @@ function updateOnjectClass(){
     // set secondary obj class title.
     if (document.getElementById("acsObjectSecondaryTextTitle").innerHTML != obj_class_subtitle_txt)
         document.getElementById("acsObjectSecondaryTextTitle").innerHTML = obj_class_subtitle_txt;
+
+    previous_selections[0] = obj_class_val
+    previous_selections[1] = sec_obj_class_val
 }
 
 function updteDisrupionClass(){
@@ -562,6 +582,7 @@ function updateOpionalOptions(){
                 document.getElementById("acsbar").classList.remove("min560");
                 document.getElementById("acsbar").classList.add("min715");
             }
+            updateTextScale()
     }
     else if (document.getElementById("gridCheckbox").checked == false &&
         document.getElementById("acsObjDisRisk").style.getPropertyValue("grid-template-columns") != ""){
@@ -577,8 +598,18 @@ function updateOpionalOptions(){
                 document.getElementById("acsbar").classList.remove("min715");
                 document.getElementById("acsbar").classList.add("min560");
             }
+            updateTextScale()
     }
     
+}
+
+function updateTextScale(){
+    let dis_cls_val = parseInt(document.getElementById("inputDisruptionClass").value);
+    let risk_cls_val = parseInt(document.getElementById("inputRiskClass").value);
+    if (document.getElementById("gridCheckbox").checked == false && dis_cls_val == 0 && risk_cls_val == 0)
+        document.documentElement.style.setProperty('--textScale', '1.6');
+    else if (document.getElementById("gridCheckbox").checked == true || dis_cls_val != 0 || risk_cls_val != 0)
+        document.documentElement.style.setProperty('--textScale', '1');
 }
 
 function toggleThickBorder(imgWrapper, thick){
@@ -807,7 +838,7 @@ function goDark(){
     localStorage.setItem("theme", "dark");
     document.documentElement.style.setProperty('--black', '#fff');
 
-    document.getElementById("invertCheckbox").checked = false;
+    // document.getElementById("invertCheckbox").checked = false;
 
     if (document.getElementById("invertRingsCheckbox").checked){
         document.documentElement.style.setProperty('--ringblack', '#fff');
@@ -827,7 +858,7 @@ function goLight(){
 
     document.documentElement.style.setProperty('--black', '#000');
 
-    document.getElementById("invertCheckbox").checked = true;
+    // document.getElementById("invertCheckbox").checked = true;
 
     if (document.getElementById("invertRingsCheckbox").checked){
         document.documentElement.style.setProperty('--ringblack', '#000');
@@ -839,4 +870,13 @@ function goLight(){
 
     if (document.getElementById("invertDiamondCheckbox").checked)
         document.getElementById("acsDiamondImg").classList.remove("invert")
+}
+
+function clearInputs(pasteParent, fileParent){
+    document.getElementById(fileParent).value = "";
+    deleteChildren(pasteParent);
+}
+
+function deleteChildren(parent){
+    document.getElementById(parent).innerHTML = "";
 }
