@@ -13,7 +13,7 @@
     <script defer rel="javascript" type="text/javascript" src="js/resizeAcsBar.js"></script>
     <script defer rel="javascript" type="text/javascript" src="js/download.js"></script>
     
-    <script defer rel="javascript" type="text/javascript" src="libs\node_modules/modern-screenshot/dist/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image-more/3.3.0/dom-to-image-more.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +26,7 @@
         <div id="titleAreaPattern">
             <div id="tileArea">
                 <h1>SCP Anomaly Classification System Bar Generator</h1>
-                <h3>[SCP] ACS Bar Generator v0.2.0</h3>
+                <h3>[SCP] ACS Bar Generator v0.2.1</h3>
             </div>
         </div>
         <nav class="fw600">
@@ -167,7 +167,7 @@
                     <div class="settingDiv">
                         <h3>Disruption Class <a href="https://scp-wiki.wikidot.com/anomaly-classification-system-guide#disruption-class" title="Disruption Class Explanation" target="_blank" class="textdeconone"><i class="fa fa-question-circle-o"></i></a></h3>
                         <p><i>Title</i></p>
-                        <input type="text" placeholder="DISRUPTION CLASS:" value="DISRUPTION CLASS:" id="inputDisruptionClassTitle">
+                        <input type="text" placeholder="DISRUPTION CLASS:" value="DISRUPTION CLASS:" id="inputDisruptionClassTitle">
                         <p><i>Theme</i></p>
                         <select id="inputDisruptionClass">
                             <option value="1">Dark</option>
@@ -191,7 +191,7 @@
 
                         <h3>Risk Class <a href="https://scp-wiki.wikidot.com/anomaly-classification-system-guide#risk-class" title="Risk Class Explanation" target="_blank" class="textdeconone"><i class="fa fa-question-circle-o"></i></a></h3>
                         <p><i>Title</i></p>
-                        <input type="text" placeholder="RISK CLASS:" value="RISK CLASS:" id="inputRiskClassTitle">
+                        <input type="text" placeholder="RISK CLASS:" value="RISK CLASS:" id="inputRiskClassTitle">
                         <p><i>Theme</i></p>
                         <select id="inputRiskClass">
                             <option value="1">Notice</option>
@@ -399,6 +399,11 @@
                     <li>added </li>
                     <li>fixed bg colors for non-esoteric primary classes with a secondary class.</li>
                     <li>fixed small text when grid style is off and disruption & risk classes are disabled.</li>
+                </ul>
+                <h4>0.2.1 - 27/03/2025</h4>
+                <ul class="changelogList">
+                    <li>fixed image download to follow css better.</li>
+                    <li>fixed word wrapping in downloaded images.</li>
                 </ul>
                 <h4>0.2.0 - 27/03/2025</h4>
                 <ul class="changelogList">

@@ -165,6 +165,7 @@ nav a:hover{
     border: 1px solid var(--black);
     font-family: 'Inter', sans-serif;
     position: relative;
+    text-wrap: nowrap !important;
 }
 #resizeHandle{
     position: absolute;
