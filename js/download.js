@@ -45,7 +45,7 @@ function convertHtmlToPng() {
         domtoimage.toPng(acsBar, param)
             .then(function (dataUrl) {
                 const link = document.createElement('a');
-                link.download = 'acsbar.png';
+                link.download = `acsbar-${document.getElementById("inputItemTitle").value}.png`;
                 link.href = dataUrl;
                 link.click();
             })
